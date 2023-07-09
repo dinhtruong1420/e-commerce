@@ -11,7 +11,6 @@ import CreditForm from "./elements/CreditForm";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import CTooltip from "../../../components/core/CTooltip";
-import CInput from "../../../components/core/CInput";
 import { Radio } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import FreeDelivery from "./elements/FreeDelivery";
@@ -49,7 +48,11 @@ const ViewCartCheckout = () => {
     <div className="flex gap-8">
       <div className="w-1/2">
         {!currentStep ? (
-          <AddressStep user={user} setCurrentStep={setCurrentStep} />
+          <AddressStep
+            user={user}
+            setCurrentStep={setCurrentStep}
+            handlePayment={handlePayment}
+          />
         ) : (
           <PaymentStep
             setCurrentStep={setCurrentStep}
@@ -114,7 +117,7 @@ const ViewCartCheckout = () => {
   );
 };
 
-function AddressStep({ setCurrentStep }) {
+function AddressStep({ setCurrentStep, handlePayment }) {
   const navigate = useNavigate();
   const { checkoutInfo, mutateData } = useProductStore((state) => state);
   const { address } = useGlobalStore((state) => state);
@@ -170,7 +173,7 @@ function AddressStep({ setCurrentStep }) {
         onSubmit={(e) => {
           if (e.paymentMethod === "paypal") {
             setCurrentStep(1);
-          }
+          } else handlePayment();
         }}
       />
     </div>
