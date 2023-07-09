@@ -1,0 +1,7 @@
+.CInput {
+  @apply text-black border-[#d9d9d9] border-[1px] text-sm cursor-pointer focus:outline-none w-full;
+
+  &[type=submit] {
+    @apply text-white
+  }
+}
